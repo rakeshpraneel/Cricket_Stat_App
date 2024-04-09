@@ -47,6 +47,8 @@ def Read_data_from_db():
     print(result)
     Player_dict={}
     Indivi_dict={}
+    #Leaderboard_dict
+    Leaderboard_dict={}
     for r in result:
         player_name = r[1].strip()
         try:
@@ -82,6 +84,7 @@ def Read_data_from_db():
                     print("Faced below error while trying to calculate the individual stat")
                     print(arg)
             All_Innings_dict.update(Indivi_dict)
+            Leaderboard_dict[player_name_crted] = Indivi_dict
             Player_dict[player_name_crted] = All_Innings_dict
             #Player_dict[player_name] = Indivi_dict
         except Exception as arg:
@@ -91,6 +94,8 @@ def Read_data_from_db():
     print(Player_dict)
     with open("/home/StumpsManiac/content/player_details.json","w") as jsonfile:
         json.dump(Player_dict,jsonfile)
-
+    #Calculate Leaderboard data
+    l_result = sorted(Leaderboard_dict.items(),key=lambda x:x[1]['Total runs'])
+    print(l_result)
 
 Read_data_from_db()
