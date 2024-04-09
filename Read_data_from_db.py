@@ -1,6 +1,15 @@
 import pymysql
 import json
 
+
+# Function to Calculate batting leaderboard
+def Calculate_leaderboard_batting(Leaderboard_dict):
+    Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total Runs'])))
+    #print(Leaderboard_dict)
+    Leaderboard_dict = {k: Leaderboard_dict[k] for k in list(Leaderboard_dict)[:6]}
+    return Leaderboard_dict
+
+#Function to Calculate the individual stats
 def Calculate_data(runs,balls,status,fours,sixes,orders):
     Total_innings = len(runs)
     Total_runs = sum(runs)
@@ -95,7 +104,13 @@ def Read_data_from_db():
     with open("/home/StumpsManiac/content/player_details.json","w") as jsonfile:
         json.dump(Player_dict,jsonfile)
     #Calculate Leaderboard data
-    l_result = sorted(Leaderboard_dict.items(),key=lambda x:x[1]['Total runs'])
-    print(l_result)
+    try:
+        Leaderboard_dict = Calculate_leaderboard_batting(Leaderboard_dict)
+        print("Calculated batting LeaderBoard")
+        print(Leaderboard_dict)
+    except Exception as arg:
+        print("Faced below error while trying to calculate batting leaderboard")
+        print(arg)
+
 
 Read_data_from_db()
