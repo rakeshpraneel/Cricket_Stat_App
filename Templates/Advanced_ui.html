@@ -1,0 +1,124 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUMPSMANIAC</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /*overflow: hidden;*/
+
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Adjust the gap between cards */
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: width 0.3s ease;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card.expanded {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            overflow: scroll;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .card table {
+            width: 100%;
+            height: 100%
+            border-collapse: collapse;
+            margin-top: 10px;
+            display: none; /* Hide table by default */
+            overflow: scroll;
+        }
+        .card.expanded table {
+            display: table;
+            overflow: scroll;
+        }
+        .card table th,
+        .card table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stumps Maniac Team</h1>
+    <div class="container">
+        {% for user, user_data in jsonfile.items() %}
+        <div class="card" onclick="expandCard(this)">
+            <div class="card-summary">
+                <h2>{{ user }}</h2>
+                <div>Innings: {{ user_data['Innings'] }}</div>
+                <div>Total Runs: {{ user_data['Total Runs'] }}</div>
+                <div>Strike Rate: {{ user_data['Strike Rate'] }}</div>
+                <div>Average: {{ user_data['Average'] }}</div>
+                <div>Total 4s: {{ user_data['Total 4s'] }}</div>
+                <div>Total 6s: {{ user_data['Total 6s'] }}</div>
+                <div>Position: {{ user_data['Position'] }}</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Innings</th>
+                        <th>Runs</th>
+                        <th>Balls</th>
+                        <th>Status</th>
+                        <th>Fours</th>
+                        <th>Sixes</th>
+                        <th>Position</th>
+                        <th>Order</th>
+                        <th>Opponent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match_number, match_data in user_data.items() %}
+                    <tr class="details">
+                        <td>{{ match_number }}</td>
+                        <td>{{ match_data.Runs }}</td>
+                        <td>{{ match_data.Balls }}</td>
+                        <td>{{ match_data.Status }}</td>
+                        <td>{{ match_data.Fours }}</td>
+                        <td>{{ match_data.Sixes }}</td>
+                        <td>{{ match_data.Position }}</td>
+                        <td>{{ match_data.Order }}</td>
+                        <td>{{ match_data.Opponent }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function expandCard(card) {
+            card.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
