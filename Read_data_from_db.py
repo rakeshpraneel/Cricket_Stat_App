@@ -110,7 +110,7 @@ def Read_data_from_db():
         print(Leaderboard_dict)
         # load the data to json
         with open("/home/StumpsManiac/content/batting_leaderboard.json","w") as jsonfile_1:
-            jsonfile_1.dump(Leaderboard_dict,jsonfile_1)
+            json.dump(Leaderboard_dict,jsonfile_1)
     except Exception as arg:
         print("Faced below error while trying to calculate batting leaderboard")
         print(arg)
