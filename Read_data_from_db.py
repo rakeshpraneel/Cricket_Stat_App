@@ -4,7 +4,7 @@ import json
 
 # Function to Calculate batting leaderboard
 def Calculate_leaderboard_batting(Leaderboard_dict):
-    Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total Runs'])))
+    Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total_Runs'])))
     #print(Leaderboard_dict)
     Leaderboard_dict = {k: Leaderboard_dict[k] for k in list(Leaderboard_dict)[:6]}
     return Leaderboard_dict
