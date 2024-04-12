@@ -11,7 +11,7 @@
             padding: 0;
             height: 100%;
             /*overflow: hidden;*/
-
+            position: relative;
         }
         .container {
             display: flex;
@@ -66,8 +66,11 @@
             text-align: left;
         }
           .button-container {
+            position: absolute;
+            top: 2px;
+            right: 10px;
             text-align: center;
-            margin-top: 20px;
+            padding: 20px
         }
         .toggle-button {
             padding: 10px 20px;
@@ -78,10 +81,54 @@
             border: none;
             border-radius: 5px;
         }
+        .toggle-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            width: 100%;
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            overflow: scroll;
+        }
+        .toggle-card.expanded {
+            display: block;
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            z-index: 999;
+        }
+        .toggle-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            overflow: scroll;
+        }
+        .toggle-card table th,
+        .toggle-card table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .hidden {
+            display: none;
+        }
+        .icon {
+            width: 10px; /* Adjust icon size as needed */
+            height: 10px;
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Stumps Maniac Team</h1>
+    <header>
+
+    <h2>Batting Stats <img src="batting.png" alt="icon missing" class="icon"></h2>
+    </header>
     <div class="container">
         {% for user, user_data in jsonfile.items() %}
         <div class="card" onclick="expandCard(this)">
@@ -129,11 +176,44 @@
         {% endfor %}
     </div>
     <div class="button-container">
-        <button class="toggle-button" onclick="toggleTable()">Toggle Table</button>
+        <button class="toggle-button" onclick="toggleTable()">Leaderboard</button>
     </div>
+    <div id="Leaderboard" class="toggle-card hidden">
+        <table>
+        <thead>
+            <tr>
+                        <th>Name</th>
+                        <th>Innings</th>
+                        <th>Total Runs</th>
+                        <th>Strike Rate</th>
+                        <th>Average</th>
+                        <th>Total 4s</th>
+                        <th>Total 6s</th>
+                        <th>Position</th>
+                    </tr>
+              </thead>
+              <tbody>
+                    {% for user_1, user_data_1 in jsonf_bat_lb.items() %}
+                    <tr class="details">
+                        <td>{{ user_1 }}</td>
+                        <td>{{ user_data_1.Innings }}</td>
+                        <td>{{ user_data_1.Total_Runs }}</td>
+                        <td>{{ user_data_1.Strike_Rate }}</td>
+                        <td>{{ user_data_1.Average }}</td>
+                        <td>{{ user_data_1.Total_4s }}</td>
+                        <td>{{ user_data_1.Total_6s }}</td>
+                        <td>{{ user_data_1.Position }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+</div>
     <script>
         function expandCard(card) {
             card.classList.toggle('expanded');
+        }
+        function toggleTable() {
+            document.getElementById("Leaderboard").classList.toggle("expanded");
         }
     </script>
 </body>
