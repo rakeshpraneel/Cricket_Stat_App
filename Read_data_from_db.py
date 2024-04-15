@@ -4,7 +4,7 @@ import json
 
 # Function to Calculate batting leaderboard
 def Calculate_leaderboard_batting(Leaderboard_dict):
-    Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total Runs'])))
+    Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total_Runs'])))
     #print(Leaderboard_dict)
     Leaderboard_dict = {k: Leaderboard_dict[k] for k in list(Leaderboard_dict)[:6]}
     return Leaderboard_dict
@@ -38,11 +38,11 @@ def Calculate_data(runs,balls,status,fours,sixes,orders):
         Freq_played_order_string = "Unknown"
     # Packaging the data
     Individual_player_dict["Innings"] = Total_innings
-    Individual_player_dict["Total Runs"] = Total_runs
-    Individual_player_dict["Strike Rate"] = Average_strike_rate
+    Individual_player_dict["Total_Runs"] = Total_runs
+    Individual_player_dict["Strike_Rate"] = Average_strike_rate
     Individual_player_dict["Average"] = Average
-    Individual_player_dict["Total 4s"] = Total_fours
-    Individual_player_dict["Total 6s"] = Total_sixes
+    Individual_player_dict["Total_4s"] = Total_fours
+    Individual_player_dict["Total_6s"] = Total_sixes
     Individual_player_dict["Position"] = Freq_played_order_string
     return Individual_player_dict
 
