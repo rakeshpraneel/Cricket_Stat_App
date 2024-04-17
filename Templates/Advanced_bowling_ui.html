@@ -195,7 +195,11 @@
               <tbody>
                     {% for user_1, user_data_1 in jsonf_bowl_lb.items() %}
                     <tr class="details">
+                        {% if loop.first %}
+                        <td><img src="purple-cap.png" alt="icon" class="icon">{{ user_1 }}</td>
+                        {% else %}
                         <td>{{ user_1 }}</td>
+                        {% endif %}
                         <td>{{ user_data_1['Innings'] }}</td>
                         <td>{{ user_data_1['Total_Runs'] }}</td>
                         <td>{{ user_data_1['Overs'] }}</td>

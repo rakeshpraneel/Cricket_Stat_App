@@ -129,6 +129,7 @@
 
     <h2>Batting Stats <img src="batting.png" alt="icon missing" class="icon"></h2>
     </header>
+    <button type="button" onclick="window.location.href='{{ url_for( 'bowling_ui') }}';">Go to Bowling</button>
     <div class="container">
         {% for user, user_data in jsonfile.items() %}
         <div class="card" onclick="expandCard(this)">
@@ -195,7 +196,11 @@
               <tbody>
                     {% for user_1, user_data_1 in jsonf_bat_lb.items() %}
                     <tr class="details">
+                        {% if loop.first %}
+                        <td><img src="orange-cap.png" alt="icon" class="icon">{{ user_1 }}</td>
+                        {% else %}
                         <td>{{ user_1 }}</td>
+                        {% endif %}
                         <td>{{ user_data_1.Innings }}</td>
                         <td>{{ user_data_1.Total_Runs }}</td>
                         <td>{{ user_data_1.Strike_Rate }}</td>
@@ -204,6 +209,7 @@
                         <td>{{ user_data_1.Total_6s }}</td>
                         <td>{{ user_data_1.Position }}</td>
                     </tr>
+                    {% set count = 1 %}
                     {% endfor %}
                 </tbody>
             </table>
