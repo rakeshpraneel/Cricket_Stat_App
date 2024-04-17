@@ -1,7 +1,7 @@
 import pymysql
 
 def sql_connection():
-    db = pymysql.connect(host="StumpsManiac.mysql.pythonanywhere-services.com",user="StumpsManiac", password="StumpsDatabase", database="StumpsManiac$players")
+    db = pymysql.connect(host="",user="", password="", database="")
     executor = db.cursor()
     query_id="Select * from player_details;"
     executor.execute(query_id)
