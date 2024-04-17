@@ -23,7 +23,7 @@ except Exception as arg:
 
 # Reading the player bowling details json file content
 try:
-    with open('batting_leaderboard.json','r') as outfile:
+    with open('player_details_bowling.json', 'r') as outfile:
         output_data_bowling = json.load(outfile)
 except Exception as arg:
     print("Faced below error while trying to access players bowling details json")
@@ -31,7 +31,7 @@ except Exception as arg:
 
 # Reading the bowling leaderboard json file content
 try:
-    with open('batting_leaderboard.json','r') as outfile:
+    with open('bowling_leaderboard.json','r') as outfile:
         output_data_bowling_2 = json.load(outfile)
 except Exception as arg:
     print("Faced below error while trying to access bowling leaderboard json")
@@ -49,9 +49,9 @@ except Exception as arg:
 def home_ui():
     return render_template("Advanced_ui.html", jsonfile=output_data, jsonf_bat_lb=output_data_2)
 
-@app.route('/bowling')
+@app.route('/bowling/')
 def bowling_ui():
-    pass
+    return render_template("Advanced_bowling_ui.html", jsonfile=output_data_bowling, jsonf_bowl_lb=output_data_bowling_2)
 
 @app.route('/fieling')
 def fielding_ui():
