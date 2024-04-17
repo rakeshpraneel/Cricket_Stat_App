@@ -1,7 +1,7 @@
 import requests
 import json
 
-secret_file = 'SM_Secret_key.json'
+secret_file = '{file_name}'
 secret_values = {}
 with open(secret_file,'r') as sf:
     secret_values = json.loads(sf.read())
