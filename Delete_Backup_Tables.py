@@ -2,7 +2,7 @@ import pymysql
 from datetime import date
 
 def sql_connection():
-    db = pymysql.connect(host="StumpsManiac.mysql.pythonanywhere-services.com",user="StumpsManiac", password="StumpsDatabase", database="StumpsManiac$players")
+    db = pymysql.connect(host="",user="", password="", database="")
     executor = db.cursor()
     query_id="Select * from player_details;"
     executor.execute(query_id)
@@ -29,7 +29,7 @@ def sql_connection():
             Find_backup_tables(result)
         except Exception as arg:
             print(arg)
-    user_input = input("Delete the backup tables that are 15 days older (y/n): ")
+    user_input = input("Delete the backup tables that are 7 days older (y/n): ")
     if user_input.lower() == 'y':
         try:
             Delete_Older_bkp_tb(result_before_7_days)
