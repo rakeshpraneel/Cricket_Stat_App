@@ -126,10 +126,9 @@
 <body>
     <h1>Stumps Maniac Team</h1>
     <header>
-
-    <h2>Batting Stats <img src="batting.png" alt="icon missing" class="icon"></h2>
+    <h2>Bowling Stats <img src="batting.png" alt="icon missing" class="icon"></h2>
     </header>
-    <button type="button" onclick="window.location.href='{{ url_for( 'bowling_ui') }}';">Go to Bowling</button>
+    <button type="button" onclick="window.location.href='{{ url_for( 'home_ui') }}';">Go to Batting</button>
     <div class="container">
         {% for user, user_data in jsonfile.items() %}
         <div class="card" onclick="expandCard(this)">
@@ -137,23 +136,23 @@
                 <h2>{{ user }}</h2>
                 <div>Innings: {{ user_data['Innings'] }}</div>
                 <div>Total Runs: {{ user_data['Total_Runs'] }}</div>
-                <div>Strike Rate: {{ user_data['Strike_Rate'] }}</div>
-                <div>Average: {{ user_data['Average'] }}</div>
-                <div>Total 4s: {{ user_data['Total_4s'] }}</div>
-                <div>Total 6s: {{ user_data['Total_6s'] }}</div>
-                <div>Position: {{ user_data['Position'] }}</div>
+                <div>Overs: {{ user_data['Overs'] }}</div>
+                <div>Wickets: {{ user_data['Wickets'] }}</div>
+                <div>Eco: {{ user_data['Economy'] }}</div>
+                <div>Wickets interval: {{ user_data['Wickets taken interval'] }}</div>
+                <div>Boundaries interval: {{ user_data['Boundaries given interval'] }}</div>
+                <div>Extras interval: {{ user_data['Extras bowled interval'] }}</div>
             </div>
             <table>
                 <thead>
                     <tr>
                         <th>Innings</th>
-                        <th>Runs</th>
-                        <th>Balls</th>
-                        <th>Status</th>
+                        <th>Runs Conceded</th>
+                        <th>Overs</th>
+                        <th>Wicket</th>
                         <th>Fours</th>
                         <th>Sixes</th>
-                        <th>Position</th>
-                        <th>Order</th>
+                        <th>Extras</th>
                         <th>Opponent</th>
                     </tr>
                 </thead>
@@ -161,14 +160,13 @@
                     {% for match_number, match_data in user_data.items() %}
                     <tr class="details">
                         <td>{{ match_number }}</td>
-                        <td>{{ match_data.Runs }}</td>
-                        <td>{{ match_data.Balls }}</td>
-                        <td>{{ match_data.Status }}</td>
-                        <td>{{ match_data.Fours }}</td>
-                        <td>{{ match_data.Sixes }}</td>
-                        <td>{{ match_data.Position }}</td>
-                        <td>{{ match_data.Order }}</td>
-                        <td>{{ match_data.Opponent }}</td>
+                        <td>{{ match_data['Runs Conceded'] }}</td>
+                        <td>{{ match_data['Overs'] }}</td>
+                        <td>{{ match_data['Wicket'] }}</td>
+                        <td>{{ match_data['Fours'] }}</td>
+                        <td>{{ match_data['Sixes'] }}</td>
+                        <td>{{ match_data['Extras'] }}</td>
+                        <td>{{ match_data['Opponent'] }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -186,30 +184,31 @@
                         <th>Name</th>
                         <th>Innings</th>
                         <th>Total Runs</th>
-                        <th>Strike Rate</th>
-                        <th>Average</th>
-                        <th>Total 4s</th>
-                        <th>Total 6s</th>
-                        <th>Position</th>
+                        <th>Overs</th>
+                        <th>Wickets</th>
+                        <th>Economy</th>
+                        <th>Wickets interval</th>
+                        <th>Boundaries interval</th>
+                        <th>Extras interval</th>>
                     </tr>
               </thead>
               <tbody>
-                    {% for user_1, user_data_1 in jsonf_bat_lb.items() %}
+                    {% for user_1, user_data_1 in jsonf_bowl_lb.items() %}
                     <tr class="details">
                         {% if loop.first %}
-                        <td><img src="orange-cap.png" alt="icon" class="icon">{{ user_1 }}</td>
+                        <td><img src="purple-cap.png" alt="icon" class="icon">{{ user_1 }}</td>
                         {% else %}
                         <td>{{ user_1 }}</td>
                         {% endif %}
-                        <td>{{ user_data_1.Innings }}</td>
-                        <td>{{ user_data_1.Total_Runs }}</td>
-                        <td>{{ user_data_1.Strike_Rate }}</td>
-                        <td>{{ user_data_1.Average }}</td>
-                        <td>{{ user_data_1.Total_4s }}</td>
-                        <td>{{ user_data_1.Total_6s }}</td>
-                        <td>{{ user_data_1.Position }}</td>
+                        <td>{{ user_data_1['Innings'] }}</td>
+                        <td>{{ user_data_1['Total_Runs'] }}</td>
+                        <td>{{ user_data_1['Overs'] }}</td>
+                        <td>{{ user_data_1['Wickets'] }}</td>
+                        <td>{{ user_data_1['Economy'] }}</td>
+                        <td>{{ user_data_1['Wickets taken interval'] }}</td>
+                        <td>{{ user_data_1['Boundaries given interval'] }}</td>
+                        <td>{{ user_data_1['Extras bowled interval'] }}</td>
                     </tr>
-                    {% set count = 1 %}
                     {% endfor %}
                 </tbody>
             </table>
