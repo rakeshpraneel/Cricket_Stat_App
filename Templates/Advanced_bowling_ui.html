@@ -1,0 +1,221 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUMPSMANIAC</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /*overflow: hidden;*/
+            position: relative;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Adjust the gap between cards */
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: width 0.3s ease;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card.expanded {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            overflow: scroll;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .card table {
+            width: 100%;
+            height: 100%
+            border-collapse: collapse;
+            margin-top: 10px;
+            display: none; /* Hide table by default */
+            overflow: scroll;
+        }
+        .card.expanded table {
+            display: table;
+            overflow: scroll;
+        }
+        .card table th,
+        .card table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+          .button-container {
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            text-align: center;
+            padding: 20px
+        }
+        .toggle-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+        .toggle-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            width: 100%;
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            overflow: scroll;
+        }
+        .toggle-card.expanded {
+            display: block;
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            z-index: 999;
+        }
+        .toggle-card table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            overflow: scroll;
+        }
+        .toggle-card table th,
+        .toggle-card table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .hidden {
+            display: none;
+        }
+        .icon {
+            width: 10px; /* Adjust icon size as needed */
+            height: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stumps Maniac Team</h1>
+    <header>
+    <h2>Bowling Stats <img src="batting.png" alt="icon missing" class="icon"></h2>
+    </header>
+    <button type="button" onclick="window.location.href='{{ url_for( 'home_ui') }}';">Go to Batting</button>
+    <div class="container">
+        {% for user, user_data in jsonfile.items() %}
+        <div class="card" onclick="expandCard(this)">
+            <div class="card-summary">
+                <h2>{{ user }}</h2>
+                <div>Innings: {{ user_data['Innings'] }}</div>
+                <div>Total Runs: {{ user_data['Total_Runs'] }}</div>
+                <div>Overs: {{ user_data['Overs'] }}</div>
+                <div>Wickets: {{ user_data['Wickets'] }}</div>
+                <div>Eco: {{ user_data['Economy'] }}</div>
+                <div>Wickets interval: {{ user_data['Wickets taken interval'] }}</div>
+                <div>Boundaries interval: {{ user_data['Boundaries given interval'] }}</div>
+                <div>Extras interval: {{ user_data['Extras bowled interval'] }}</div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Innings</th>
+                        <th>Runs Conceded</th>
+                        <th>Overs</th>
+                        <th>Wicket</th>
+                        <th>Fours</th>
+                        <th>Sixes</th>
+                        <th>Extras</th>
+                        <th>Opponent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for match_number, match_data in user_data.items() %}
+                    <tr class="details">
+                        <td>{{ match_number }}</td>
+                        <td>{{ match_data['Runs Conceded'] }}</td>
+                        <td>{{ match_data['Overs'] }}</td>
+                        <td>{{ match_data['Wicket'] }}</td>
+                        <td>{{ match_data['Fours'] }}</td>
+                        <td>{{ match_data['Sixes'] }}</td>
+                        <td>{{ match_data['Extras'] }}</td>
+                        <td>{{ match_data['Opponent'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="button-container">
+        <button class="toggle-button" onclick="toggleTable()">Leaderboard</button>
+    </div>
+    <div id="Leaderboard" class="toggle-card hidden">
+        <table>
+        <thead>
+            <tr>
+                        <th>Name</th>
+                        <th>Innings</th>
+                        <th>Total Runs</th>
+                        <th>Overs</th>
+                        <th>Wickets</th>
+                        <th>Economy</th>
+                        <th>Wickets interval</th>
+                        <th>Boundaries interval</th>
+                        <th>Extras interval</th>>
+                    </tr>
+              </thead>
+              <tbody>
+                    {% for user_1, user_data_1 in jsonf_bowl_lb.items() %}
+                    <tr class="details">
+                        <td>{{ user_1 }}</td>
+                        <td>{{ user_data_1['Innings'] }}</td>
+                        <td>{{ user_data_1['Total_Runs'] }}</td>
+                        <td>{{ user_data_1['Overs'] }}</td>
+                        <td>{{ user_data_1['Wickets'] }}</td>
+                        <td>{{ user_data_1['Economy'] }}</td>
+                        <td>{{ user_data_1['Wickets taken interval'] }}</td>
+                        <td>{{ user_data_1['Boundaries given interval'] }}</td>
+                        <td>{{ user_data_1['Extras bowled interval'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+</div>
+    <script>
+        function expandCard(card) {
+            card.classList.toggle('expanded');
+        }
+        function toggleTable() {
+            document.getElementById("Leaderboard").classList.toggle("expanded");
+        }
+    </script>
+</body>
+</html>
