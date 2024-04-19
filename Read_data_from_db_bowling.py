@@ -42,8 +42,8 @@ def Calculate_data(runs,overs,wicket,fours,sixes,extra):
     return Individual_player_dict
 
 def Read_data_from_db():
-    db = pymysql.connect(host="StumpsManiac.mysql.pythonanywhere-services.com", user="StumpsManiac",
-                         password="StumpsDatabase", database="StumpsManiac$players")
+    db = pymysql.connect(host="", user="",
+                         password="", database="")
     executor = db.cursor()
     select_query = "Select * from player_details;"
     executor.execute(select_query)
