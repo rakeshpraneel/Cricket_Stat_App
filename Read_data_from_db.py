@@ -3,10 +3,10 @@ import json
 
 
 # Function to Calculate batting leaderboard
-def Calculate_leaderboard_batting(Leaderboard_dict):
+def Calculate_leaderboard_batting(Leaderboard_dict,player_count):
     Leaderboard_dict = dict(reversed(sorted(Leaderboard_dict.items(), key=lambda x: x[1]['Total_Runs'])))
     #print(Leaderboard_dict)
-    Leaderboard_dict = {k: Leaderboard_dict[k] for k in list(Leaderboard_dict)[:6]}
+    Leaderboard_dict = {k: Leaderboard_dict[k] for k in list(Leaderboard_dict)[:int(player_count/2)]}
     return Leaderboard_dict
 
 #Function to Calculate the individual stats
@@ -47,8 +47,8 @@ def Calculate_data(runs,balls,status,fours,sixes,orders):
     return Individual_player_dict
 
 def Read_data_from_db():
-    db = pymysql.connect(host="", user="",
-                         password="", database="")
+    db = pymysql.connect(host="StumpsManiac.mysql.pythonanywhere-services.com", user="StumpsManiac",
+                         password="StumpsDatabase", database="StumpsManiac$players")
     executor = db.cursor()
     select_query = "Select * from player_details;"
     executor.execute(select_query)
@@ -105,7 +105,10 @@ def Read_data_from_db():
         json.dump(Player_dict,jsonfile)
     #Calculate Leaderboard data
     try:
-        Leaderboard_dict = Calculate_leaderboard_batting(Leaderboard_dict)
+        players_count_query = "Select count(*) from player_details;"
+        executor.execute(players_count_query)
+        players_count = executor.fetchone()[0]
+        Leaderboard_dict = Calculate_leaderboard_batting(Leaderboard_dict, players_count)
         print("Calculated batting LeaderBoard")
         print(Leaderboard_dict)
         # load the data to json
