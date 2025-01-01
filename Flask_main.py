@@ -58,4 +58,5 @@ def fielding_ui():
     pass
 
 if __name__ == '__main__':
-    app.run()
+    # bounding it to all network interface
+    app.run(host='0.0.0.0', port=8080)
