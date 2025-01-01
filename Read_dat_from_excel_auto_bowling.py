@@ -6,7 +6,7 @@ def Read_data(Names_in_db,executor):
     #Obtaining file and sheet name
     #file_path = input("Enter the file path: ")
     #sheet_name = input("Enter the sheet name: ")
-    file_path = "/home/StumpsManiac/database/Individual_player_bowling_stats.xlsx"
+    file_path = "Sample/Sample_bowling.xlsx"
     #Reading the data
     excel_sheet = xl.open_workbook(file_path)
     print(f"Total sheets present in the excel: {excel_sheet.nsheets}")

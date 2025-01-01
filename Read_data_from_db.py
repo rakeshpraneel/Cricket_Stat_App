@@ -101,7 +101,7 @@ def Read_data_from_db():
             print(arg)
     #Player_dict["Players"]=Innings_dict
     print(Player_dict)
-    with open("/home/StumpsManiac/content/player_details.json","w") as jsonfile:
+    with open("Data/player_details.json","w") as jsonfile:
         json.dump(Player_dict,jsonfile)
     #Calculate Leaderboard data
     try:
@@ -109,7 +109,7 @@ def Read_data_from_db():
         print("Calculated batting LeaderBoard")
         print(Leaderboard_dict)
         # load the data to json
-        with open("/home/StumpsManiac/content/batting_leaderboard.json","w") as jsonfile_1:
+        with open("Data/batting_leaderboard.json","w") as jsonfile_1:
             json.dump(Leaderboard_dict,jsonfile_1)
     except Exception as arg:
         print("Faced below error while trying to calculate batting leaderboard")
